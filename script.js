@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
         '4', '5', '6', '*',
         '1', '2', '3', '-',
         '0', '.', '=', '+',
-        'C', 'sin', 'cos', 'tan',
-        '(', ')', 'sqrt', '**',
+        'C', 'AC', 'sin', 'cos',
+        'tan', '(', ')', 'sqrt', '**',
     ];
 
     buttons.forEach(buttonValue => {
@@ -37,6 +37,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 display.value = 'Error';
             }
         } else if (value === 'C') {
+            // Clear the current input
+            display.value = '';
+        } else if (value === 'AC') {
+            // Clear the entire calculator memory
             display.value = '';
         } else {
             display.value += value;
