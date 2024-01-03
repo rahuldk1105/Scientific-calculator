@@ -1,47 +1,45 @@
-function backspace() {
-	let display = document.getElementById("display");
-	display.value = display.value.slice(0, -1);
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const display = document.getElementById('display');
+    const calculatorButtons = document.getElementById('calculatorButtons');
+    const darkModeButton = document.createElement('button');
+    darkModeButton.textContent = 'Toggle Dark Mode';
+    darkModeButton.addEventListener('click', toggleDarkMode);
+    calculatorButtons.appendChild(darkModeButton);
 
-function calculate() {
-	let display = document.getElementById("display");
-	let expression = display.value;
-	let result;
+    const buttons = [
+        '7', '8', '9', '/',
+        '4', '5', '6', '*',
+        '1', '2', '3', '-',
+        '0', '.', '=', '+',
+        'C', 'sin', 'cos', 'tan',
+        '(', ')', 'sqrt', '^',
+    ];
 
-	try {
-		// Convert trigonometric function inputs from degrees to radians
-		expression = expression.replace(/sin\(/g, 'sin(' + Math.PI / 180 + '*');
-		expression = expression.replace(/cos\(/g, 'cos(' + Math.PI / 180 + '*');
-		expression = expression.replace(/tan\(/g, 'tan(' + Math.PI / 180 + '*');
+    buttons.forEach(buttonValue => {
+        const button = document.createElement('button');
+        button.textContent = buttonValue;
+        button.addEventListener('click', () => handleButtonClick(buttonValue));
+        calculatorButtons.appendChild(button);
+    });
 
-		result = math.evaluate(expression);
-		display.value = result;
-	} catch (error) {
-		display.value = "Error";
-	}
-}
+    let darkMode = false;
 
-function squareRoot() {
-	let display = document.getElementById("display");
-	display.value += "sqrt(";
-}
+    function toggleDarkMode() {
+        darkMode = !darkMode;
+        document.body.classList.toggle('dark-mode', darkMode);
+    }
 
-function base10Log() {
-	let display = document.getElementById("display");
-	display.value += "log(";
-}
-
-function pi() {
-	let display = document.getElementById("display");
-	display.value += "pi";
-}
-
-function e() {
-	let display = document.getElementById("display");
-	display.value += "e";
-}
-
-function power() {
-	let display = document.getElementById("display");
-	display.value += "^(";
-}
+    function handleButtonClick(value) {
+        if (value === '=') {
+            try {
+                display.value = eval(display.value);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        } else if (value === 'C') {
+            display.value = '';
+        } else {
+            display.value += value;
+        }
+    }
+});
