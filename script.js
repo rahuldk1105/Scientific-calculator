@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const display = document.getElementById('display');
     const calculatorButtons = document.getElementById('calculatorButtons');
     const darkModeButton = document.createElement('button');
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '1', '2', '3', '-',
         '0', '.', '=', '+',
         'C', 'sin', 'cos', 'tan',
-        '(', ')', 'sqrt', '^',
+        '(', ')', 'sqrt', '**',
     ];
 
     buttons.forEach(buttonValue => {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleButtonClick(value) {
         if (value === '=') {
             try {
-                display.value = eval(display.value);
+                display.value = Function('"use strict";return (' + display.value + ')')();
             } catch (error) {
                 display.value = 'Error';
             }
@@ -43,3 +43,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
