@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleButtonClick(value) {
         if (value === '=') {
             try {
-                display.value = Function('"use strict";return (' + display.value + ')')();
+                display.value = eval(display.value);
             } catch (error) {
                 display.value = 'Error';
             }
@@ -43,8 +43,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // Clear the entire calculator memory
             display.value = '';
         } else {
-            display.value += value;
+            // Handle mathematical functions
+            if (['sqrt', 'sin', 'cos', 'tan'].includes(value)) {
+                display.value += `Math.${value}(`;
+            } else {
+                display.value += value;
+            }
         }
     }
 });
-
